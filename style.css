@@ -69,7 +69,7 @@ main > button {
 .advice-id {
     font-size: 13px;
     color: var(--secondary-color);
-    font-weight: 500;
+    font-weight: var(--font-weight);
     text-transform: uppercase;
     letter-spacing: 3px;
 }
