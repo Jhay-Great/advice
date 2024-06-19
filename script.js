@@ -2,9 +2,12 @@
 const adviceParagraph = document.querySelector('.advice');
 const adviceId = document.querySelector('.advice-id')
 const button = document.querySelector('button');
+const loader = document.querySelector('.loader');
 
 // fetching data
 const fetchAdvice = async function() {
+    const obj = loadingEffect(adviceParagraph, loader);
+    obj.showLoading();
     try {
         const response = await fetch('https://api.adviceslip.com/advice')
         if (!response.ok) {
@@ -13,31 +16,30 @@ const fetchAdvice = async function() {
         const data = await response.json();
         return data;
     } catch (error) {
-        // console.log(error.message);
+        console.log(error.message);
         return error.message;
     }
 }
 
 // helper functions
-const displayContent = async function() {
+const displayContent = async function(e) {
     const {slip: {id, advice}} = await fetchAdvice();
     adviceId.textContent = `advice #${id}`;
-    adviceParagraph.textContent = advice;
-    console.log(this);
+    adviceParagraph.textContent = `"${advice}"`;
 
+    const object = loadingEffect(adviceParagraph, loader)
+    object.hideLoading();
 }
 
-const loadingEffect = function(parent) {
-    const loader = document.createElement('p');
-    loader.textContent = `loading...`;
+const loadingEffect = function(sibling, loader) {
     return {
         showLoading() {
-            parent.classList.add('hidden');
+            sibling.classList.add('hidden');
             loader.classList.remove('hidden');
         },
         hideLoading() {
             loader.classList.add('hidden');
-            parent.classList.remove('hidden');
+            sibling.classList.remove('hidden');
         }
     }
 

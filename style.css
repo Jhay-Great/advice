@@ -54,7 +54,8 @@ main > p:first-child,
 main > button {
     width: fit-content;
 }
-.advice {
+.advice,
+.loader {
     flex: 1 1 0;
     height: 250px;
     font-size: var(--quote-size);
